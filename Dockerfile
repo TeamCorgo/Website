@@ -24,6 +24,9 @@ RUN apt-get clean && \
 # Expose port 80
 EXPOSE 80
 
+# Create a volume for storage locations
+VOLUME /etc/nginx/logs
+
 # Copy the built files from the previous stage into the nginx HTML folder
 COPY ./content /usr/share/nginx/html
 
