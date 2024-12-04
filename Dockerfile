@@ -36,6 +36,9 @@ COPY ./config /etc/nginx
 # Copy Docker files
 COPY ./entrypoint.sh /entrypoint.sh
 
+# Set permissions for the entrypoint script
+RUN chmod +x /entrypoint.sh
+
 # Health check for Nginx
 HEALTHCHECK --start-period=60s --interval=300s --timeout=60s --retries=3 \
     CMD curl -k -f http://127.0.0.1:80/robots.txt || exit 1
