@@ -1,4 +1,7 @@
 #!/bin/sh
+
+git pull
+
 sudo docker stop Website > /dev/null 2>&1
 sudo docker rm Website > /dev/null 2>&1
 
