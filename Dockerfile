@@ -34,11 +34,11 @@ COPY ./config /etc/nginx
 #RUN mkdir /etc/nginx/logs
 
 # Copy Docker files
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
 # Health check for Nginx
 HEALTHCHECK --start-period=60s --interval=300s --timeout=60s --retries=3 \
     CMD curl -k -f http://127.0.0.1:80/robots.txt || exit 1
 
 # Run and refresh 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
