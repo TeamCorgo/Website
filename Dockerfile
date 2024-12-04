@@ -31,7 +31,7 @@ COPY ./content /usr/share/nginx/html
 COPY ./config /etc/nginx
 
 # Create a directory for logs
-#RUN mkdir /etc/nginx/logs
+RUN mkdir /etc/nginx/logs
 
 # Copy Docker files
 COPY ./entrypoint.sh /entrypoint.sh
