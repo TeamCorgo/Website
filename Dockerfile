@@ -28,7 +28,8 @@ EXPOSE 80
 COPY ./content /usr/share/nginx/html
 
 # Copy nginx config files (Override)
-COPY ./config /etc/nginx
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
+COPY ./config/server.conf /etc/nginx/conf.d/server.conf
 
 # Create a directory for logs
 RUN mkdir /etc/nginx/logs
