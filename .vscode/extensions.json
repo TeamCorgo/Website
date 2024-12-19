@@ -10,7 +10,6 @@
         "ms-python.black-formatter",
         "ms-python.isort",
         "ms-python.pylint",
-        "ms-python.mypy-type-checker",
         // Styles
         "dracula-theme.theme-dracula",
         "oderwat.indent-rainbow",
