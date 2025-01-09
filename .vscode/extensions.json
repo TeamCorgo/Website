@@ -4,12 +4,6 @@
     // List of extensions which should be recommended for users of this workspace.
     // # @recommended
     "recommendations": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        // Setup pylinters and formatters
-        "ms-python.black-formatter",
-        "ms-python.isort",
-        "ms-python.pylint",
         // Styles
         "dracula-theme.theme-dracula",
         "oderwat.indent-rainbow",
@@ -17,6 +11,5 @@
     // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
     "unwantedRecommendations": [
         "ms-azuretools.vscode-docker",
-        "mechatroner.rainbow-csv",
     ]
 }
