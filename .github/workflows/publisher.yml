@@ -30,6 +30,13 @@ jobs:
         with:
           path: Code
 
+      # Clone another repository into Code/DiceRoller
+      - name: Clone DiceRoller repository
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/DiceRoller
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
       # Upload generated files as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
