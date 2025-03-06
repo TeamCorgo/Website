@@ -33,7 +33,7 @@ jobs:
       # Clone another repository into Code/DiceRoller
       - name: Clone DiceRoller repository
         run: |
-          git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/DiceRoller
+          git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/dice
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
