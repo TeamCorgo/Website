@@ -30,10 +30,15 @@ jobs:
         with:
           path: Code
 
-      # Clone another repository into Code/DiceRoller
-      - name: Clone DiceRoller repository
+      - name: Clone DiceRoller repository into Code/dice
         run: |
           git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/dice
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
+      - name: Clone SpaceMailRoom repository into Code/mail
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/SpaceMailRoom.git Code/mail
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
