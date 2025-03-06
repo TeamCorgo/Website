@@ -48,6 +48,12 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
+      - name: Clone Image2Mega repository into Code/image2mega
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/Image2Mega.git Code/image2mega
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
       # Upload generated files as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
