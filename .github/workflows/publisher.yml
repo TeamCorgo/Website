@@ -44,7 +44,7 @@ jobs:
 
       - name: Clone InstrumentMegaPack repository into Code/instrument
         run: |
-          git clone --depth=1 https://github.com/TeamCorgo/InstrumentMegaPack.git Code/Instrument
+          git clone --depth=1 https://github.com/TeamCorgo/InstrumentMegaPack.git Code/instrument
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
