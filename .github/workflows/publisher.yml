@@ -42,6 +42,12 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
+      - name: Clone InstrumentMegaPack repository into Code/instrument
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/InstrumentMegaPack.git Code/Instrument
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
       # Upload generated files as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
