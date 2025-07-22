@@ -42,9 +42,9 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
-      - name: Clone InstrumentMegaPack repository into Code/instrument
+      - name: Clone Instruments repository into Code/instruments
         run: |
-          git clone --depth=1 https://github.com/TeamCorgo/InstrumentMegaPack.git Code/instrument
+          git clone --depth=1 https://github.com/TeamCorgo/Instruments.git Code/instruments
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
