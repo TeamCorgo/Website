@@ -42,9 +42,9 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
-      - name: Clone (Instruments) repository subfolder into Code/instruments
+      - name: Clone (Instrument_Converter) repository subfolder into Code/instruments
         run: |
-          git clone --depth=1 https://github.com/TeamCorgo/Instruments.git /tmp/instruments
+          git clone --depth=1 https://github.com/TeamCorgo/Instrument_Converter.git /tmp/instruments
           mkdir -p Code/instruments
           cp -r /tmp/instruments/content/* Code/instruments/
         env:
