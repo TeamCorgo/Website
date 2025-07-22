@@ -42,16 +42,13 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
-      - name: Clone (Instruments) repository into RAM
+      - name: Clone (Instruments) repository subfolder into Code/instruments
         run: |
           git clone --depth=1 https://github.com/TeamCorgo/Instruments.git /tmp/instruments
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Move (Instruments) files from RAM to target
-        run: |
           mkdir -p Code/instruments
           cp -r /tmp/instruments/content/* Code/instruments/
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
       - name: Clone Image2Mega repository into Code/image2mega
         run: |
