@@ -56,6 +56,14 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
+      - name: Clone (CS-Help/webpage) repository subfolder into Code/cs-help
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/CS-Help.git /tmp/help
+          mkdir -p Code/cs-help
+          cp -r /tmp/help/webpage/* Code/cs-help/
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
       # Upload generated files as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
