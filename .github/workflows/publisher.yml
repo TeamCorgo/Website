@@ -61,8 +61,14 @@ jobs:
           git clone --depth=1 https://github.com/TeamCorgo/The-CyberStorm-Museum.git /tmp/Museum
           mkdir -p Code/cs-help
           mkdir -p Code/cs-tools
+          mkdir -p Code/cs-tools/js
+          mkdir -p Code/cs-tools/images
+          mkdir -p Code/cs-tools/css
           cp -r /tmp/Museum/modern/help/* Code/cs-help/
           cp -r /tmp/Museum/tools/*.html Code/cs-tools/
+          cp -r /tmp/Museum/tools/js/* Code/cs-tools/js
+          cp -r /tmp/Museum/tools/images/* Code/cs-tools/images
+          cp -r /tmp/Museum/tools/css/* Code/cs-tools/css
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
