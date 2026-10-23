@@ -60,7 +60,7 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/TeamCorgo/Cyberstorm-V1.3.git /tmp/cs-patch
           mkdir -p Code/cs-patch
-          cp -r /tmp/cs-patch/* Code/cs-patch/
+          cp -r /tmp/cs-patch/patcher/* Code/cs-patch/
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
