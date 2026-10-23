@@ -56,6 +56,12 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
 
+      - name: Clone CS v1.3 repository into Code/cs-patch
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/Cyberstorm-V1.3.git Code/cs-patch
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
+
       - name: Clone Museum repository subfolder into Code/cs-help
         run: |
           git clone --depth=1 https://github.com/TeamCorgo/The-CyberStorm-Museum.git /tmp/Museum
