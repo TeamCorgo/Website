@@ -1,102 +1,100 @@
+
 name: Publisher
 
 on:
-  workflow_dispatch:  # Allows manual trigger of the workflow
+  workflow_dispatch:
   push:
     branches:
-      - 'latest'
+      - latest
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+    - cron: '0 0 * * *'
 
 jobs:
-  cleanup:
-    runs-on: ubuntu-latest
-    permissions: write-all
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: debian:13-slim
 
     steps:
-      - name: 🗑 Cleanup deployments
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y git ca-certificates
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          path: Code
+
+      - name: Clone DiceRoller repository
+        run: git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/dice
+
+      - name: Clone SpaceMailRoom repository
+        run: git clone --depth=1 https://github.com/TeamCorgo/SpaceMailRoom.git Code/mail
+
+      - name: Clone Instrument Converter content
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/Instrument_Converter.git /tmp/instruments
+          mkdir -p Code/instruments
+          cp -r /tmp/instruments/content/. Code/instruments/
+
+      - name: Clone Image2Mega repository
+        run: git clone --depth=1 https://github.com/TeamCorgo/Image2Mega.git Code/image2mega
+
+      - name: Clone Cyberstorm patcher
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/Cyberstorm-V1.3.git /tmp/cs-patch
+          mkdir -p Code/cs-patch
+          cp -r /tmp/cs-patch/patcher/. Code/cs-patch/
+
+      - name: Clone Museum resources
+        run: |
+          git clone --depth=1 https://github.com/TeamCorgo/The-CyberStorm-Museum.git /tmp/Museum
+
+          mkdir -p Code/cs-help
+          mkdir -p Code/cs-tools/js
+          mkdir -p Code/cs-tools/images
+          mkdir -p Code/cs-tools/css
+
+          cp -r /tmp/Museum/modern/help/. Code/cs-help/
+          cp -r /tmp/Museum/tools/*.html Code/cs-tools/
+          cp -r /tmp/Museum/tools/js/. Code/cs-tools/js/
+          cp -r /tmp/Museum/tools/images/. Code/cs-tools/images/
+          cp -r /tmp/Museum/tools/css/. Code/cs-tools/css/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: Code
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  cleanup:
+    needs: deploy
+    runs-on: ubuntu-24.04
+    permissions:
+      deployments: write
+
+    steps:
+      - name: Cleanup old deployment records
         uses: strumwolf/delete-deployment-environment@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           environment: github-pages
           onlyRemoveDeployments: true
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          path: Code
-
-      - name: Clone DiceRoller repository into Code/dice
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/DiceRoller.git Code/dice
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Clone SpaceMailRoom repository into Code/mail
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/SpaceMailRoom.git Code/mail
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Clone (Instrument_Converter) repository subfolder into Code/instruments
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/Instrument_Converter.git /tmp/instruments
-          mkdir -p Code/instruments
-          cp -r /tmp/instruments/content/* Code/instruments/
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Clone Image2Mega repository into Code/image2mega
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/Image2Mega.git Code/image2mega
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Clone CS v1.3 repository into Code/cs-patch
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/Cyberstorm-V1.3.git /tmp/cs-patch
-          mkdir -p Code/cs-patch
-          cp -r /tmp/cs-patch/patcher/* Code/cs-patch/
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      - name: Clone Museum repository subfolder into Code/cs-help
-        run: |
-          git clone --depth=1 https://github.com/TeamCorgo/The-CyberStorm-Museum.git /tmp/Museum
-          mkdir -p Code/cs-help
-          mkdir -p Code/cs-tools
-          mkdir -p Code/cs-tools/js
-          mkdir -p Code/cs-tools/images
-          mkdir -p Code/cs-tools/css
-          cp -r /tmp/Museum/modern/help/* Code/cs-help/
-          cp -r /tmp/Museum/tools/*.html Code/cs-tools/
-          cp -r /tmp/Museum/tools/js/* Code/cs-tools/js
-          cp -r /tmp/Museum/tools/images/* Code/cs-tools/images
-          cp -r /tmp/Museum/tools/css/* Code/cs-tools/css
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents prompts for authentication
-
-      # Upload generated files as an artifact
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: Code
-
-  deploy:
-    needs: build  # Ensure deploy runs after build completes
-    permissions:
-      pages: write  # Grant permission to write to GitHub Pages
-      id-token: write  # Grant permission for id-token usage
-    environment:
-      name: github-pages  # Environment name for deployment
-      url: ${{ steps.deployment.outputs.page_url }}  # URL of deployed pages
-    runs-on: ubuntu-latest
-    steps:
-      # Deploy generated Doxygen files to GitHub Pages
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
