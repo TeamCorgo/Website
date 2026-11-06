@@ -64,7 +64,7 @@ jobs:
           cp -r /tmp/Museum/tools/css/. Code/cs-tools/css/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v6
+        uses: actions/upload-pages-artifact@v4
         with:
           path: Code
 
@@ -83,7 +83,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v6
+        uses: actions/deploy-pages@v4
 
   cleanup:
     needs: deploy
