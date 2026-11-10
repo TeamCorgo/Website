@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - latest
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   build:
